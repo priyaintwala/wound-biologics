@@ -23,18 +23,18 @@ authRouter.post(
     "/verify-email",
     validateData(emailSchema),
     authController.verifyEmail
-);
+)
 authRouter.post("/send-otp", validateData(emailSchema), authController.sendOtp);
 authRouter.post(
     "/verify-otp",
     validateData(otpSchema),
     authController.verifyOtp
-);
-
+)
+console.log("test")
 authRouter.post(
     "/reset-password",
     validateData(resetPasswordSchema),
     authController.resetPassword
-);
+)
 
 export default authRouter;
