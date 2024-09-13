@@ -1,0 +1,15 @@
+# Compiled JavaScript files
+lib/**/*.js
+lib/**/*.js.map
+
+# TypeScript v1 declaration files
+typings/
+
+# Node.js dependency directory
+node_modules/
+
+dist/
+.env.local
+v-personal-s-account.json
+datahawk-tech-firebase-adminsdk.json
+woundbio-firebase-adminsdk-wk8ik-2f8a43c54c.json

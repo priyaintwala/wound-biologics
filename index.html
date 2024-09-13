@@ -1,0 +1,171 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>File List</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+      }
+
+      h1 {
+        text-align: center;
+      }
+
+      ul {
+        list-style-type: none;
+        padding: 0;
+      }
+
+      li {
+        background-color: #f2f2f2;
+        padding: 10px;
+        margin-bottom: 5px;
+      }
+
+      a {
+        color: #333;
+        text-decoration: none;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>File List</h1>
+    <button id="fetchFiles" type="button">Fetch Files</button>
+    <ul id="fileList"></ul>
+
+    <script>
+      const fileListElement = document.getElementById("fileList");
+      const fetchFilesButton = document.getElementById("fetchFiles");
+
+      fetchFilesButton.addEventListener("click", (event) => {
+        event.preventDefault();
+        console.log("hello");
+        fetchFiles();
+      });
+
+      const fetchFiles = async () => {
+        // const data =await fetch('http://127.0.0.1:5001/fir-functions-9c002/us-central1/wb/api/drive')
+        const data = await fetch('http://127.0.0.1:5001/woundbio/us-central1/wb/api/gdrive/files')
+        console.log("world")
+        console.log(data);
+      };
+      // .then(response => console.log(response.json()))
+      // .then(data => {
+      //     if (data.data && Array.isArray(data.data)) {
+      //         fileListElement.innerHTML = ''; // Clear the file list
+      //         data.data.forEach(file => {
+      //             const listItem = document.createElement('li');
+      //             const link = document.createElement('a');
+      //             link.href = file.downloadLink;
+      //             link.target = '_blank';
+      //             link.textContent = file.name;
+      //             listItem.appendChild(link);
+      //             fileListElement.appendChild(listItem);
+      //         });
+      //     } else {
+      //         console.error('Error:', data.message || 'Invalid response format');
+      //     }
+      // })
+      // .catch(error => {
+      //     console.error('Error:', error);
+      // });
+      // };
+    </script>
+  </body>
+</html> -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download Forms</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .header {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .form-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .form-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .form-name {
+            flex-grow: 1;
+        }
+        .download-btn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">Download Forms</div>
+    <p>Donec ullamcorper nulla non metus auctor fringilla. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+    <ul class="form-list" id="formList"></ul>
+
+    <script>
+        // Fetch files from the backend API
+        async function fetchFiles() {
+            try {
+                const response = await fetch('http://127.0.0.1:5001/woundbio/us-central1/wb/api/gdrive/files');
+                const files = await response.json();
+                console.log(files.data.files)
+                return files.data.files;
+            } catch (error) {
+                console.error('Error fetching files:', error);
+                return [];
+            }
+        }
+
+        // Render the list of files
+        async function renderFileList() {
+            const files = await fetchFiles();
+            const formList = document.getElementById('formList');
+            formList.innerHTML = '';
+
+            files.forEach(file => {
+                const listItem = document.createElement('li');
+                listItem.classList.add('form-item');
+
+                const formName = document.createElement('span');
+                formName.classList.add('form-name');
+                formName.textContent = `${file.name} - 2039010 - IVR - Identifier`;
+
+                const downloadLink = document.createElement('a');
+                downloadLink.classList.add('download-btn');
+                downloadLink.href = file.downloadLink;
+                downloadLink.textContent = 'Download';
+                downloadLink.target = '_blank';
+
+                listItem.appendChild(formName);
+                listItem.appendChild(downloadLink);
+                formList.appendChild(listItem);
+            });
+        }
+
+        // Render the file list when the page loads
+        renderFileList();
+    </script>
+</body>
+</html>
